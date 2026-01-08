@@ -1,0 +1,3120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GΛNESH - AI Automation Engineer & Systems Architect. 119+ automations deployed. Systems over hype.">
+    <title>GΛNESH - AI Automation Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --charcoal-1: #020204;
+            --charcoal-2: #06070a;
+            --charcoal-3: #0f1115;
+            --charcoal-4: #1a1c22;
+            --charcoal-5: #23262f;
+            --gray-1: #2f3340;
+            --gray-2: #454a5c;
+            --gray-3: #7d8399;
+            --gray-4: #b0b6cc;
+            --white: #ffffff;
+            --cyan: #38bdf8;
+            --cyan-light: #7dd3fc;
+            --cyan-glow: rgba(56, 189, 248, 0.5);
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(56, 189, 248, 0.15);
+            --glass-highlight: rgba(255, 255, 255, 0.06);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--charcoal-1);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* ANIMATED BACKGROUND */
+        .bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .bg-gradient {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse 80% 50% at 50% -20%, var(--charcoal-2) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 70% at 80% 100%, rgba(56, 189, 248, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 80% 50% at 20% 50%, var(--charcoal-3) 0%, transparent 50%),
+                linear-gradient(180deg, var(--charcoal-1) 0%, var(--charcoal-2) 40%, var(--charcoal-3) 100%);
+            animation: breathe 20s ease-in-out infinite;
+        }
+        
+        @keyframes breathe {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+        
+        .bg-grain {
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            opacity: 1;
+            animation: grain 8s steps(10) infinite;
+        }
+        
+        @keyframes grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-5%, -5%); }
+            20% { transform: translate(-10%, 5%); }
+            30% { transform: translate(5%, -10%); }
+            40% { transform: translate(-5%, 15%); }
+            50% { transform: translate(-10%, 5%); }
+            60% { transform: translate(15%, 0); }
+            70% { transform: translate(0, 10%); }
+            80% { transform: translate(-15%, 0); }
+            90% { transform: translate(10%, 5%); }
+        }
+        
+        .bg-nodes {
+            position: absolute;
+            inset: 0;
+            opacity: 0.4;
+        }
+        
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--charcoal-1); }
+        ::-webkit-scrollbar-thumb {
+            background: var(--glass-bg);
+            border-radius: 5px;
+            border: 1px solid var(--glass-border);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--glass-highlight);
+        }
+        
+        /* NAVIGATION */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: clamp(1rem, 2vw, 1.5rem) clamp(2rem, 6vw, 5rem);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(2, 2, 4, 0.6);
+            backdrop-filter: blur(22px) saturate(180%);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        nav.scrolled {
+            padding: clamp(0.7rem, 1.5vw, 1rem) clamp(2rem, 6vw, 5rem);
+            background: rgba(2, 2, 4, 0.95);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.8), 0 0 0 1px var(--glass-border);
+        }
+        
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.3rem, 2.5vw, 1.7rem);
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--white) 0%, var(--cyan-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px var(--cyan-glow);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: clamp(1.5rem, 3vw, 3rem);
+            list-style: none;
+        }
+        
+        .nav-links a {
+            color: var(--gray-3);
+            text-decoration: none;
+            font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--cyan), var(--cyan-light));
+            box-shadow: 0 0 10px var(--cyan-glow);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--white);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: clamp(8rem, 15vh, 12rem) clamp(2rem, 6vw, 5rem) clamp(4rem, 8vh, 8rem);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: clamp(500px, 80vw, 1200px);
+            height: clamp(400px, 60vh, 800px);
+            background: radial-gradient(ellipse, var(--cyan-glow) 0%, transparent 70%);
+            filter: blur(100px);
+            animation: pulse-hero 8s ease-in-out infinite;
+            opacity: 0.4;
+        }
+        
+        @keyframes pulse-hero {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.4;
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(1.1);
+                opacity: 0.6;
+            }
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 1100px;
+        }
+        
+        .eyebrow {
+            font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+            color: var(--gray-3);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: clamp(1.5rem, 3vh, 2rem);
+            font-weight: 700;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards 0.2s;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+        
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 7vw, 6.5rem);
+            line-height: 1.05;
+            margin-bottom: clamp(1.5rem, 3vh, 2rem);
+            font-weight: 900;
+            letter-spacing: clamp(-2px, -0.3vw, -4px);
+            background: linear-gradient(135deg, var(--white) 0%, var(--cyan-light) 50%, var(--white) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 80px var(--cyan-glow);
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards 0.4s;
+        }
+        
+        .hero-subtext {
+            font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+            color: var(--gray-3);
+            margin-bottom: clamp(2rem, 4vh, 3rem);
+            line-height: 1.7;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards 0.6s;
+        }
+        
+        .cta-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-bottom: clamp(4rem, 8vh, 6rem);
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards 0.8s;
+        }
+        
+        .btn {
+            padding: clamp(1rem, 2vw, 1.3rem) clamp(2rem, 4vw, 3.5rem);
+            border-radius: 12px;
+            font-size: clamp(0.9rem, 1.8vw, 1.05rem);
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .btn:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--cyan-light) 100%);
+            color: var(--charcoal-1);
+            box-shadow: 0 10px 40px var(--cyan-glow), 0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 20px 60px var(--cyan-glow), 0 0 0 1px rgba(255, 255, 255, 0.2) inset;
+        }
+        
+        .btn-secondary {
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            color: var(--white);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--glass-highlight);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1), 0 0 0 1px var(--glass-highlight) inset;
+            border-color: var(--cyan);
+        }
+        
+        .stats-row {
+            display: flex;
+            gap: clamp(1.5rem, 3vw, 3rem);
+            justify-content: center;
+            flex-wrap: wrap;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards 1s;
+        }
+        
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px) saturate(180%);
+            padding: clamp(1.8rem, 3vw, 2.5rem) clamp(2.5rem, 4vw, 4rem);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 0%, var(--cyan-glow), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            border-color: var(--cyan);
+            box-shadow: 0 20px 60px var(--cyan-glow);
+        }
+        
+        .stat-card:hover::before,
+        .stat-card:hover::after {
+            opacity: 1;
+        }
+        
+        .stat-value {
+            display: block;
+            font-size: clamp(2.8rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            color: var(--white);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-label {
+            color: var(--gray-3);
+            font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* SECTIONS */
+        section {
+            padding: clamp(4rem, 10vh, 8rem) clamp(2rem, 6vw, 5rem);
+            max-width: 1400px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: clamp(3rem, 6vh, 5rem);
+        }
+        
+        .section-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, var(--white) 0%, var(--gray-3) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-header p {
+            color: var(--gray-3);
+            font-size: clamp(1rem, 2vw, 1.3rem);
+        }
+        
+        /* ABOUT SECTION */
+        .about-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: clamp(2.5rem, 5vw, 4rem);
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .about-card p {
+            color: var(--gray-3);
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        .about-card p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .about-card strong {
+            color: var(--cyan-light);
+            font-weight: 700;
+        }
+        
+        /* GLASS CARDS */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+            gap: clamp(1.5rem, 3vw, 2.5rem);
+        }
+        
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: clamp(2rem, 4vw, 3rem);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+            transform: scaleX(0);
+            transition: transform 0.6s ease;
+        }
+        
+        .glass-card::after {
+            content: '';
+            position: absolute;
+            inset: -100%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent, var(--cyan-glow), transparent);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            animation: rotate 10s linear infinite;
+        }
+        
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+        
+        .glass-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .glass-card:hover::after {
+            opacity: 0.3;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-12px) rotateX(2deg);
+            border-color: var(--cyan);
+            box-shadow: 0 30px 80px rgba(56, 189, 248, 0.25);
+        }
+        
+        .glass-card h3 {
+            font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+            margin-bottom: 1rem;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .glass-card p {
+            color: var(--gray-3);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .glass-card ul {
+            list-style: none;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .glass-card li {
+            color: var(--gray-3);
+            padding: 0.7rem 0 0.7rem 2rem;
+            position: relative;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--cyan);
+            transition: all 0.3s ease;
+            font-weight: 700;
+        }
+        
+        .glass-card:hover li::before {
+            transform: translateX(6px);
+            text-shadow: 0 0 10px var(--cyan-glow);
+        }
+        
+        .glass-card:hover li {
+            color: var(--gray-4);
+        }
+        
+        /* SKILLS SECTION */
+        .skills-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .skill-pill {
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            padding: 0.9rem 2rem;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            color: var(--gray-3);
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-pill::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, var(--cyan-glow), transparent 50%, var(--cyan-glow));
+            border-radius: 50px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+        
+        .skill-pill:hover {
+            border-color: var(--cyan);
+            color: var(--cyan-light);
+            box-shadow: 0 8px 32px var(--cyan-glow);
+            transform: translateY(-4px) scale(1.05);
+        }
+        
+        .skill-pill:hover::before {
+            opacity: 1;
+        }
+        
+        /* TECH STACK TAGS */
+        .tech-stack {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        .tech-tag {
+            background: var(--charcoal-3);
+            border: 1px solid var(--glass-border);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--gray-3);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .tech-tag:hover {
+            border-color: var(--cyan);
+            color: var(--cyan-light);
+            box-shadow: 0 0 20px var(--cyan-glow);
+        }
+        
+        /* TESTIMONIAL SCROLLER */
+        .testimonial-scroller {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            height: 400px;
+            overflow: hidden;
+        }
+        
+        .testimonial-track {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .testimonial-card {
+            min-height: 400px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            left: 2rem;
+            font-size: 8rem;
+            color: var(--cyan);
+            opacity: 0.1;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+        
+        .testimonial-result {
+            font-size: clamp(1.4rem, 2.8vw, 1.8rem);
+            font-weight: 800;
+            color: var(--cyan-light);
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-card p {
+            font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+            line-height: 1.7;
+            color: var(--gray-4);
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 1.5rem;
+        }
+        
+        .testimonial-meta {
+            font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+            color: var(--gray-3);
+            font-style: normal;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .testimonial-trust {
+            font-size: 0.85rem;
+            color: var(--gray-3);
+            font-style: normal;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-dots {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .testimonial-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-dot.active {
+            background: var(--cyan);
+            box-shadow: 0 0 20px var(--cyan-glow);
+            transform: scale(1.3);
+        }
+        
+        /* FLASHCARDS */
+        .flashcards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+            gap: clamp(2rem, 4vw, 3rem);
+            margin: 3rem 0;
+        }
+        
+        .flashcard {
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px) saturate(180%);
+            border: 2px solid var(--glass-border);
+            border-radius: 30px;
+            padding: clamp(2.5rem, 5vw, 3.5rem);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .flashcard::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            background: linear-gradient(135deg, var(--cyan-glow) 0%, transparent 40%, var(--cyan-glow) 100%);
+            border-radius: 30px;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            z-index: -1;
+        }
+        
+        .flashcard::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--cyan-glow) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            pointer-events: none;
+        }
+        
+        .flashcard:hover::before,
+        .flashcard:hover::after {
+            opacity: 1;
+        }
+        
+        .flashcard:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: var(--cyan);
+            box-shadow: 0 24px 80px rgba(56, 189, 248, 0.4), inset 0 1px 0 rgba(56, 189, 248, 0.2);
+        }
+        
+        .flashcard-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--charcoal-3);
+            border: 2px solid var(--cyan);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px var(--cyan-glow);
+            transition: all 0.4s ease;
+        }
+        
+        .flashcard:hover .flashcard-icon {
+            transform: scale(1.1) rotate(-5deg);
+            box-shadow: 0 12px 48px var(--cyan-glow);
+        }
+        
+        .flashcard h3 {
+            font-size: clamp(1.5rem, 3vw, 1.9rem);
+            font-weight: 900;
+            margin-bottom: 1.2rem;
+            background: linear-gradient(135deg, var(--white) 0%, var(--cyan-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .flashcard p {
+            color: var(--gray-3);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+        
+        .flashcard-visual {
+            margin-top: auto;
+            padding-top: 2rem;
+            border-top: 1px solid var(--glass-border);
+        }
+        
+        .waveform {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 60px;
+            gap: 4px;
+        }
+        
+        .wave-bar {
+            flex: 1;
+            background: linear-gradient(180deg, var(--cyan) 0%, var(--cyan-light) 100%);
+            border-radius: 4px;
+            opacity: 0.6;
+            animation: wave 1.5s ease-in-out infinite;
+            box-shadow: 0 0 10px var(--cyan-glow);
+        }
+        
+        .wave-bar:nth-child(1) { height: 30%; animation-delay: 0s; }
+        .wave-bar:nth-child(2) { height: 60%; animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { height: 45%; animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { height: 80%; animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { height: 50%; animation-delay: 0.4s; }
+        .wave-bar:nth-child(6) { height: 70%; animation-delay: 0.5s; }
+        .wave-bar:nth-child(7) { height: 40%; animation-delay: 0.6s; }
+        .wave-bar:nth-child(8) { height: 55%; animation-delay: 0.7s; }
+        
+        @keyframes wave {
+            0%, 100% { transform: scaleY(1); opacity: 0.6; }
+            50% { transform: scaleY(1.3); opacity: 1; }
+        }
+        
+        .code-preview {
+            background: var(--charcoal-3);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 1.2rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: var(--gray-3);
+            line-height: 1.6;
+            box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+        
+        .code-preview .code-line {
+            margin: 0.3rem 0;
+        }
+        
+        .code-preview .code-key {
+            color: var(--cyan-light);
+        }
+        
+        .code-preview .code-value {
+            color: var(--gray-4);
+        }
+        
+        .chat-bubbles {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .chat-bubble {
+            background: var(--charcoal-3);
+            border: 1px solid var(--cyan);
+            border-radius: 18px;
+            padding: 0.9rem 1.3rem;
+            max-width: 85%;
+            color: var(--gray-4);
+            font-size: 0.9rem;
+            box-shadow: 0 4px 16px rgba(56, 189, 248, 0.2);
+            animation: fadeSlideIn 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        .chat-bubble:nth-child(1) { animation-delay: 0.2s; align-self: flex-end; }
+        .chat-bubble:nth-child(2) { animation-delay: 0.4s; align-self: flex-start; }
+        .chat-bubble:nth-child(3) { animation-delay: 0.6s; align-self: flex-end; }
+        
+        @keyframes fadeSlideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+        }
+        
+        .floating-particles {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--cyan);
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .particle:nth-child(1) { left: 10%; top: 20%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 50%; top: 40%; animation-delay: 2s; }
+        .particle:nth-child(3) { left: 80%; top: 60%; animation-delay: 4s; }
+        .particle:nth-child(4) { left: 30%; top: 70%; animation-delay: 6s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0.4; }
+            50% { transform: translateY(-30px) translateX(15px); opacity: 0.8; }
+        }
+        
+        /* PROJECT ENGINE CARDS */
+        .project-engines {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 450px), 1fr));
+            gap: clamp(2rem, 4vw, 3rem);
+            margin: 3rem 0;
+        }
+        
+        .project-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px) saturate(180%);
+            border: 2px solid var(--glass-border);
+            border-radius: 28px;
+            overflow: hidden;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            background: linear-gradient(135deg, var(--cyan-glow), transparent 60%);
+            border-radius: 28px;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            z-index: -1;
+        }
+        
+        .project-card:hover::before {
+            opacity: 1;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--cyan);
+            box-shadow: 0 28px 80px rgba(56, 189, 248, 0.35);
+        }
+        
+        .project-thumbnail {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, var(--charcoal-3) 0%, var(--charcoal-4) 100%);
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-3);
+            font-size: 0.9rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-thumbnail::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30% 30%, var(--cyan-glow) 0%, transparent 70%);
+            opacity: 0.2;
+        }
+        
+        .project-content {
+            padding: clamp(2rem, 4vw, 2.8rem);
+        }
+        
+        .project-content h3 {
+            font-size: clamp(1.6rem, 3vw, 2rem);
+            font-weight: 900;
+            margin-bottom: 1.2rem;
+            background: linear-gradient(135deg, var(--white) 0%, var(--cyan-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .project-content p {
+            color: var(--gray-3);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+        }
+        
+        .project-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 2rem;
+            background: var(--charcoal-3);
+            border: 1px solid var(--cyan);
+            border-radius: 12px;
+            color: var(--cyan-light);
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        
+        .project-btn:hover {
+            background: var(--cyan);
+            color: var(--charcoal-1);
+            box-shadow: 0 8px 32px var(--cyan-glow);
+            transform: translateX(8px);
+        }
+        
+        .project-btn::after {
+            content: '→';
+            transition: transform 0.4s ease;
+        }
+        
+        .project-btn:hover::after {
+            transform: translateX(6px);
+        }
+        
+        /* FLOW CANVAS */
+        #flowCanvas {
+            width: 100%;
+            height: clamp(400px, 50vh, 600px);
+            margin: 2rem auto;
+        }
+        
+        .flow-node {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .flow-node:hover rect {
+            stroke: var(--cyan);
+            stroke-width: 2;
+            filter: drop-shadow(0 0 15px var(--cyan-glow));
+        }
+        
+        /* MODAL */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(2, 2, 4, 0.95);
+            backdrop-filter: blur(22px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: clamp(2rem, 5vw, 4rem);
+            max-width: 900px;
+            width: 100%;
+            position: relative;
+            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .modal-close {
+            position: sticky;
+            top: 1.5rem;
+            float: right;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--white);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .modal-close:hover {
+            background: var(--glass-highlight);
+            border-color: var(--cyan);
+            transform: rotate(90deg);
+            box-shadow: 0 0 20px var(--cyan-glow);
+        }
+        
+        .case-tag {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.15);
+            color: var(--cyan-light);
+            padding: 0.5rem 1.2rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+        }
+        
+        .case-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .metric-box {
+            background: var(--charcoal-3);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+        
+        .metric-box:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 30px var(--cyan-glow);
+        }
+        
+        .metric-box h4 {
+            color: var(--gray-3);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.8rem;
+        }
+        
+        .metric-box p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--gray-4);
+        }
+        
+        /* TIMELINE */
+        .timeline {
+            position: relative;
+            padding-left: clamp(2rem, 5vw, 4rem);
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--cyan), var(--charcoal-4));
+            box-shadow: 0 0 20px var(--cyan-glow);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 2.5rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -4.6rem;
+            top: 0;
+            width: 18px;
+            height: 18px;
+            background: var(--cyan);
+            border-radius: 50%;
+            border: 4px solid var(--charcoal-1);
+            box-shadow: 0 0 0 8px rgba(56, 189, 248, 0.2), 0 0 30px var(--cyan-glow);
+            animation: pulse-node 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-node {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 8px rgba(56, 189, 248, 0.2), 0 0 30px var(--cyan-glow);
+            }
+            50% {
+                transform: scale(1.3);
+                box-shadow: 0 0 0 12px rgba(56, 189, 248, 0.3), 0 0 50px var(--cyan-glow);
+            }
+        }
+        
+        .timeline-year {
+            font-size: clamp(2.2rem, 4vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, var(--cyan) 0%, var(--white) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .timeline-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: translateX(15px);
+            border-color: var(--cyan);
+            box-shadow: 0 20px 60px rgba(56, 189, 248, 0.15);
+        }
+        
+        .timeline-content h4 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+        }
+        
+        .timeline-content p {
+            color: var(--gray-3);
+            line-height: 1.8;
+        }
+        
+        /* CONTACT PANEL */
+        .contact-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: clamp(3rem, 6vw, 6rem);
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-panel::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--cyan-glow) 0%, transparent 70%);
+            animation: rotate-slow 25s linear infinite;
+            opacity: 0.2;
+        }
+        
+        @keyframes rotate-slow {
+            100% { transform: rotate(360deg); }
+        }
+        
+        .contact-panel h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(135deg, var(--white) 0%, var(--cyan-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .contact-info {
+            margin: 2.5rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-info p {
+            margin: 1.2rem 0;
+            color: var(--gray-3);
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+        
+        .contact-info strong {
+            color: var(--white);
+        }
+        
+        .contact-methods {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 3rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-method {
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.8rem 2.5rem;
+            text-decoration: none;
+            color: var(--white);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-method::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, var(--cyan-glow), transparent 50%, var(--cyan-glow));
+            border-radius: 16px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+        
+        .contact-method:hover {
+            transform: translateY(-6px) scale(1.05);
+            border-color: var(--cyan);
+            box-shadow: 0 12px 48px var(--cyan-glow);
+        }
+        
+        .contact-method:hover::before {
+            opacity: 1;
+        }
+        
+        .contact-icon {
+            font-size: 2rem;
+        }
+        
+        .contact-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .contact-label {
+            font-size: 0.85rem;
+            color: var(--gray-3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+        
+        .contact-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--cyan-light);
+        }
+        
+        /* AGENCY BLOCKS */
+        .agency-block {
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 26px;
+            padding: 0;
+            margin-bottom: 2.5rem;
+            cursor: pointer;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        
+        .agency-block::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, var(--cyan-glow), transparent 50%, var(--cyan-glow));
+            border-radius: 26px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: -1;
+        }
+        
+        .agency-block:hover::before {
+            opacity: 1;
+        }
+        
+        .agency-block:hover {
+            border-color: var(--cyan);
+            transform: translateY(-4px);
+            box-shadow: 0 24px 64px rgba(56, 189, 248, 0.25), 0 0 40px var(--cyan-glow);
+        }
+        
+        .agency-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: clamp(2rem, 4vw, 3rem);
+            position: relative;
+        }
+        
+        .agency-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .agency-logo-container {
+            width: 80px;
+            height: 80px;
+            background: var(--charcoal-3);
+            border: 2px solid var(--glass-border);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            flex-shrink: 0;
+        }
+        
+        .agency-block:hover .agency-logo-container {
+            border-color: var(--cyan);
+            box-shadow: 0 0 30px var(--cyan-glow);
+            transform: scale(1.05);
+        }
+        
+        .agency-info h3 {
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--white) 0%, var(--cyan-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        
+        .expand-icon {
+            font-size: 2rem;
+            transition: transform 0.4s ease;
+            color: var(--cyan);
+            flex-shrink: 0;
+        }
+        
+        .agency-block.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+        
+        .agency-tagline {
+            color: var(--gray-3);
+            font-style: italic;
+            font-size: 1.05rem;
+        }
+        
+        .agency-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 0 clamp(2rem, 4vw, 3rem);
+        }
+        
+        .agency-block.expanded .agency-details {
+            max-height: 3000px;
+            padding-bottom: clamp(2rem, 4vw, 3rem);
+        }
+        
+        .agency-grid {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+        
+        .agency-thumbnail {
+            width: 100%;
+            height: 130px;
+            background: var(--charcoal-3);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-3);
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .agency-content h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            color: var(--cyan-light);
+            font-weight: 700;
+        }
+        
+        .agency-bullets {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .agency-bullets li {
+            padding: 0.8rem 0 0.8rem 2rem;
+            position: relative;
+            color: var(--gray-3);
+            line-height: 1.7;
+        }
+        
+        .agency-bullets li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--cyan);
+            font-weight: 900;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .metric-item {
+            background: var(--charcoal-3);
+            padding: 1.8rem;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+        
+        .metric-item:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 30px var(--cyan-glow);
+        }
+        
+        .metric-item strong {
+            display: block;
+            color: var(--cyan-light);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-item span {
+            color: var(--gray-4);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .testimonial {
+            background: var(--charcoal-3);
+            padding: 2rem;
+            border-radius: 16px;
+            border-left: 4px solid var(--cyan);
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial:hover {
+            box-shadow: 0 0 40px var(--cyan-glow);
+            transform: translateX(8px);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            color: var(--gray-3);
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+        
+        .testimonial-author {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--cyan-light);
+        }
+        
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 3.5rem 2rem;
+            color: var(--gray-3);
+            border-top: 1px solid var(--glass-border);
+            font-size: 0.95rem;
+        }
+        
+        footer p {
+            margin: 0.5rem 0;
+        }
+        
+        /* SLIDER */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            max-width: 1100px;
+            height: clamp(450px, 55vh, 650px);
+            margin: 3rem auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(22px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            overflow: hidden;
+        }
+        
+        .slider-side {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: clamp(2rem, 5vw, 4rem);
+        }
+        
+        .slider-before {
+            clip-path: inset(0 50% 0 0);
+            background: linear-gradient(135deg, var(--charcoal-2) 0%, var(--charcoal-3) 100%);
+        }
+        
+        .slider-after {
+            background: linear-gradient(135deg, var(--charcoal-3) 0%, var(--charcoal-4) 100%);
+        }
+        
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: var(--cyan);
+            cursor: ew-resize;
+            box-shadow: 0 0 30px var(--cyan-glow);
+            z-index: 10;
+        }
+        
+        .slider-handle::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: var(--cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 40px var(--cyan-glow), 0 0 0 4px var(--charcoal-1);
+        }
+        
+        .slider-handle::after {
+            content: '⟷';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            color: var(--charcoal-1);
+            font-weight: 900;
+        }
+        
+        .slider-label {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 900;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .slider-list {
+            list-style: none;
+        }
+        
+        .slider-list li {
+            padding: 0.8rem 0 0.8rem 2rem;
+            position: relative;
+            color: var(--gray-3);
+            font-size: clamp(0.95rem, 1.8vw, 1.1rem);
+        }
+        
+        .slider-list li::before {
+            content: '◆';
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+            color: var(--cyan);
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .nav-links { 
+                display: none; 
+            }
+            
+            nav {
+                backdrop-filter: blur(16px);
+            }
+            
+            .glass-card,
+            .stat-card,
+            .contact-panel,
+            .flashcard,
+            .project-card,
+            .about-card {
+                backdrop-filter: blur(16px);
+            }
+            
+            .timeline { 
+                padding-left: 2rem; 
+            }
+            
+            .timeline-item::before { 
+                left: -2.8rem; 
+            }
+            
+            .slider-container { 
+                height: 550px; 
+            }
+            
+            .slider-side { 
+                padding: 2rem; 
+            }
+            
+            .hero::before {
+                filter: blur(80px);
+            }
+            
+            .agency-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .agency-thumbnail {
+                height: 160px;
+            }
+            
+            .agency-left {
+                gap: 1.2rem;
+            }
+            
+            .agency-logo-container {
+                width: 60px;
+                height: 60px;
+                font-size: 2rem;
+            }
+            
+            .flashcards-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .flashcard {
+                min-height: 350px;
+            }
+            
+            .project-engines {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-methods {
+                flex-direction: column;
+            }
+            
+            .contact-method {
+                width: 100%;
+                max-width: 400px;
+            }
+            
+            .modal-content {
+                padding: 2rem;
+                max-height: 95vh;
+            }
+            
+            .modal {
+                padding: 1rem;
+                align-items: flex-end;
+            }
+            
+            .modal.active .modal-content {
+                border-radius: 24px 24px 0 0;
+                animation: slideUpMobile 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            @keyframes slideUpMobile {
+                from {
+                    transform: translateY(100%);
+                }
+                to {
+                    transform: translateY(0);
+                }
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stats-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stat-card {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-canvas">
+        <div class="bg-gradient"></div>
+        <div class="bg-grain"></div>
+        <svg class="bg-nodes" id="bgNodes"></svg>
+    </div>
+
+    <nav id="navbar">
+        <div class="logo">GΛNESH</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#agents">Agents</a></li>
+            <li><a href="#cases">Cases</a></li>
+            <li><a href="#agencies">Agencies</a></li>
+            <li><a href="#journey">Journey</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <div class="eyebrow">GΛNESH — AI AUTOMATION ENGINEER</div>
+                <h1>I Build Intelligent Systems That Drive Growth and Eliminate Repetition.</h1>
+                <p class="hero-subtext">GΛNESH Bagali • AI Automation & Systems Architect specializing in intelligent workflows, performance marketing systems, and scalable automation infrastructure</p>
+                <p class="hero-subtext">119+ automations deployed • ₹100,000+ spend managed • systems that scale</p>
+                
+                <div class="cta-group">
+                    <a href="#contact" class="btn btn-primary">Deploy an AI System</a>
+                    <a href="#cases" class="btn btn-secondary">View Case Studies</a>
+                </div>
+
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <span class="stat-value" data-target="7.2">0</span>
+                        <span class="stat-label">ROAS Peak!</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" data-target="48">0</span>
+                        <span class="stat-label">CAC Reduction %</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" data-target="35">0</span>
+                        <span class="stat-label">Hours Saved/Week!</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="about-card">
+                <p><strong>Systems thinker.</strong> AI automation and performance marketing specialist. I build intelligent workflows that eliminate repetition and drive measurable growth.</p>
+                <p><strong>Execution over theory.</strong> 119+ automations deployed. Real systems, real results. No fluff.</p>
+            </div>
+        </section>
+
+        <section id="agents">
+            <div class="section-header">
+                <h2>AI Agent Capabilities</h2>
+                <p>Intelligent automation that works while you sleep</p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="glass-card">
+                    <h3>AI Calling Agent</h3>
+                    <p>Handles inbound & outbound calls with natural conversation flow.</p>
+                    <ul>
+                        <li>Lead qualification</li>
+                        <li>Meeting booking</li>
+                        <li>Automated follow-ups</li>
+                        <li>24/7 operation</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3>WhatsApp Support Automation</h3>
+                    <p>Instant customer support through contextual messaging.</p>
+                    <ul>
+                        <li>Order tracking</li>
+                        <li>Shipping status</li>
+                        <li>Contextual replies</li>
+                        <li>Smart escalation</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3>AI Email Engine</h3>
+                    <p>Automated email sequences with intelligent targeting.</p>
+                    <ul>
+                        <li>Cold outreach logic</li>
+                        <li>Follow-up sequences</li>
+                        <li>Lead nurturing</li>
+                        <li>CRM sync</li>
+                    </ul>
+                </div>
+
+              
+                <div class="glass-card">
+                    <h3>AI YouTube Automation</h3>
+                    <p>End-to-end content creation and optimization engine.</p>
+                    <ul>
+                        <li>Script writing</li>
+                        <li>Thumbnail design</li>
+                        <li>Auto-editing</li>
+                        <li>Scheduled uploads</li>
+                        <li>Performance tracking</li>
+                        <li>Retention optimization</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3>AI Sales Closer</h3>
+                    <p>Intelligent lead handling and conversion system.</p>
+                    <ul>
+                        <li>Handles objections</li>
+                        <li>Qualifies leads</li>
+                        <li>Books calls</li>
+                        <li>Follows up</li>
+                        <li>Reports conversions</li>
+                    </ul>
+                </div>
+
+                <div class="glass-card">
+                    <h3>AI Commerce Engine</h3>
+                    <p>Complete e-commerce growth machine powered by AI.</p>
+                    <ul>
+                        <li>Predicts inventory</li>
+                        <li>Writes product descriptions</li>
+                        <li>Auto-creates upsells</li>
+                        <li>Fixes pricing</li>
+                        <li>Recovers carts via WhatsApp</li>
+                        <li>Sends retention emails</li>
+                        <li>Optimizes product rankings</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2>AI Agent Showcase</h2>
+                <p>Intelligent automation that works while you sleep</p>
+            </div>
+
+            <div class="flashcards-container">
+                <div class="flashcard">
+                    <div class="floating-particles">
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                    </div>
+                    <div class="flashcard-icon">🧠</div>
+                    <h3>AI Calling Agent</h3>
+                    <p>Handles customer calls, qualifies leads, books meetings. Never sleeps, never complains.</p>
+                    <div class="flashcard-visual">
+                        <div class="waveform">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard">
+                    <div class="floating-particles">
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                    </div>
+                    <div class="flashcard-icon">📧</div>
+                    <h3>Email Automation Bot</h3>
+                    <p>Writes, sends, follows up. Personalized sequences that convert while you sleep.</p>
+                    <div class="flashcard-visual">
+                        <div class="code-preview">
+                            <div class="code-line"><span class="code-key">subject:</span> <span class="code-value">"Quick question..."</span></div>
+                            <div class="code-line"><span class="code-key">body:</span> <span class="code-value">"Hey {{name}}, saw your..."</span></div>
+                            <div class="code-line"><span class="code-key">follow_up:</span> <span class="code-value">"+3 days"</span></div>
+                            <div class="code-line"><span class="code-key">conversion:</span> <span class="code-value">"18.4%"</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flashcard">
+                    <div class="floating-particles">
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                        <div class="particle"></div>
+                    </div>
+                    <div class="flashcard-icon">💬</div>
+                    <h3>WhatsApp Support Agent</h3>
+                    <p>Real-time responses, instant support. Customers think it's human. It's not.</p>
+                    <div class="flashcard-visual">
+                        <div class="chat-bubbles">
+                            <div class="chat-bubble">Where's my order?</div>
+                            <div class="chat-bubble">Shipped! ETA: 2 days</div>
+                            <div class="chat-bubble">Thanks! 🎉</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2>Skills & Technologies</h2>
+                <p>Tools I use to build systems that scale</p>
+            </div>
+
+            <div class="skills-pills">
+                <div class="skill-pill">AI Agents (Voice / Chat / Email)</div>
+                <div class="skill-pill">n8n Workflows</div>
+                <div class="skill-pill">Prompt Engineering</div>
+                <div class="skill-pill">JSON scripting</div>
+                <div class="skill-pill">Graphic Designing</div>
+                <div class="skill-pill">Vector Databases</div>
+                <div class="skill-pill">API Integrations</div>
+                <div class="skill-pill">Webhooks</div>
+                <div class="skill-pill">Meta Ads</div>
+                <div class="skill-pill">Funnel Architecture</div>
+                <div class="skill-pill">Conversion Tracking</div>
+                <div class="skill-pill">Attribution Modeling</div>
+                <div class="skill-pill">ROAS Optimization</div>
+                <div class="skill-pill">CAC Reduction</div>
+                <div class="skill-pill">Lead Scoring Logic</div>
+                <div class="skill-pill">HTML</div>
+                <div class="skill-pill">CSS</div>
+                <div class="skill-pill">JavaScript</div>
+                <div class="skill-pill">React Front End</div>
+                <div class="skill-pill">Interactive UI Systems</div>
+                <div class="skill-pill">Vibe Coding</div>
+                <div class="skill-pill">Performance Optimization</div>
+                <div class="skill-pill">Responsive Design</div>
+                <div class="skill-pill">Workflow Architecture</div>
+                <div class="skill-pill">SEO Optimization</div>
+                <div class="skill-pill">Scalability Planning</div>
+                <div class="skill-pill">Automation Strategy</div>
+                <div class="skill-pill">Data-Driven Decisioning</div>
+                <div class="skill-pill">Systems Thinking</div>
+            </div>
+        </section>
+
+        <section id="cases">
+            <div class="section-header">
+                <h2>Case Studies</h2>
+                <p>Real systems, real results</p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="glass-card case-study-card" data-case="ecommerce">
+                    <h3>E-Commerce Growth System</h3>
+                    <p>Fashion / Retail brand scaled with intelligent automation and attribution.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Meta Ads</span>
+                        <span class="tech-tag">GA4</span>
+                        <span class="tech-tag">Python</span>
+                    </div>
+                </div>
+
+                <div class="glass-card case-study-card" data-case="saas">
+                    <h3>SaaS Lead Qualification System</h3>
+                    <p>B2B SaaS platform automated lead scoring and routing.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">OpenAI</span>
+                        <span class="tech-tag">n8n</span>
+                        <span class="tech-tag">HubSpot</span>
+                    </div>
+                </div>
+
+                <div class="glass-card case-study-card" data-case="void">
+                    <h3>Void Studios Automation</h3>
+                    <p>Video editing agency workflow and delivery automation.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Automation</span>
+                        <span class="tech-tag">Operations</span>
+                    </div>
+                </div>
+
+                <div class="glass-card case-study-card" data-case="sleek">
+                    <h3>Sleek Agency Performance Wing</h3>
+                    <p>Performance marketing systems for local brands.</p>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Meta Ads</span>
+                        <span class="tech-tag">Funnels</span>
+                        <span class="tech-tag">Attribution</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODALS -->
+        <div class="modal" id="modal-ecommerce">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal('ecommerce')">×</button>
+                <span class="case-tag">Fashion / Retail</span>
+                <h2>E-Commerce Growth System</h2>
+                
+                <div class="case-metrics">
+                    <div class="metric-box">
+                        <h4>Problem</h4>
+                        <p>Bleeding ₹2L/month on ads with ROAS at 1.2x. Broken tracking and weak cart recovery killing profitability.</p>
+                    </div>
+                    <div class="metric-box">
+                        <h4>Solution</h4>
+                        <p>GA4 + Meta CAPI integration, abandoned cart recovery funnels, post-purchase upsell flows, automated lead nurture. Implemented AI Commerce Engine: predictive inventory, auto-generated product descriptions, dynamic upsells, cart recovery via WhatsApp, retention emails, and product ranking optimization.</p>
+                    </div>
+                    <div class="metric-box">
+                        <h4>Results</h4>
+                        <p>ROAS → 3.8x, CPA down 48%, cart recovery up 38%, faster CAC payback period. Shopify store driven to ₹2,000+ sales in 30 hours with AI upsells + photorealistic ad creatives.</p>
+                    </div>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-tag">Meta Ads</span>
+                    <span class="tech-tag">GA4</span>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">OpenAI</span>
+                    <span class="tech-tag">n8n</span>
+                    <span class="tech-tag">Shopify</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modal-saas">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal('saas')">×</button>
+                <span class="case-tag">B2B SaaS</span>
+                <h2>SaaS Lead Qualification System</h2>
+                
+                <div class="case-metrics">
+                    <div class="metric-box">
+                        <h4>Problem</h4>
+                        <p>2% demo-to-close rate. Sales team wasting time on low-quality leads. No PQL filtering.</p>
+                    </div>
+                    <div class="metric-box">
+                        <h4>Solution</h4>
+                        <p>AI qualification bot with lead scoring, PQL routing logic, automated nurture engine for cold leads, intelligent follow-up sequences.</p>
+                    </div>
+                    <div class="metric-box">
+                        <h4>Results</h4>
+                        <p>Demo conversion +62%, demo-to-close → 8.5%, 40+ hours/week saved across sales team. Closed the gap between demos and conversions.</p>
+                    </div>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-tag">OpenAI</span>
+                    <span class="tech-tag">n8n</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">HubSpot</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modal-void">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal('void')">×</button>
+                <span class="case-tag">Agency Operations</span>
+                <h2>Void Studios Automation</h2>
+                
+                <div class="case-metrics">
+                    <div class="metric-box">
+                        <h4>Challenge</h4>
+                        <p>Video editing agency needed workflow automation for rendering, delivery, and client operations.</p>
+                    </div>
+                    <div class="metric-box">
+                        <h4>Implementation</h4>
+                        <p>Backend automation for content workflows, automated rendering pipelines, streamlined client delivery systems.</p>
+                    </div>
+                    <div class="metric-box">
+                        <h4>Impact</h4>
+                        <p>3x output efficiency improvement, 50+ clients served, operational excellence achieved.</p>
+                    </div>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-tag">Workflow Design</span>
+                    <span class="tech-tag">Automation</span>
+                    <span class="tech-tag">Operations</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="modal-sleek">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal('sleek')">×</button>
+                <span class="case-tag">Performance Marketing</span>
+                <h2>Sleek Agency Performance Wing</h2>
+                
+                <div class="case-metrics">
+                    <div class="metric-box">
+                        <h4>Scope</h4>
+                        <p>Performance marketing for local brands. ₹1,00,000+ cumulative ad spend managed across campaigns.</p>
+                    </div>
+                    <div class="metric-box">
+                        <h4>Strategy</h4>
+                        <p>Meta Ads optimization, funnel building, lead generation systems, creative testing, attribution setup.</p>
+                    </div>
+                    <div class="metric-box">
+                        <h4>Outcomes</h4>
+                        <p>ROAS from <1.5x → 2.8x—3.6x range, lead cost reduced by 30—45%, strong client operations.</p>
+                    </div>
+                </div>
+                
+                <div class="tech-stack">
+                    <span class="tech-tag">Meta Ads</span>
+                    <span class="tech-tag">Funnels</span>
+                    <span class="tech-tag">Lead Gen</span>
+                    <span class="tech-tag">Attribution</span>
+                </div>
+            </div>
+        </div>
+
+        <section>
+            <div class="section-header">
+                <h2>Project Engines</h2>
+                <p>Complete systems built for scale</p>
+            </div>
+
+            <div class="project-engines">
+                <div class="project-card">
+                    <div class="project-thumbnail">
+                        E-Commerce Growth Engine<br>Thumbnail Preview
+                    </div>
+                    <div class="project-content">
+                        <h3>E-Commerce Growth Engine</h3>
+                        <p>Complete attribution system with Meta CAPI, GA4 tracking, abandoned cart recovery, and automated lead nurture. AI Commerce Engine with predictive inventory, auto-upsells, and WhatsApp cart recovery. ROAS from 1.2x → 3.8x in 3 months. Shopify store: ₹2,000+ sales in 30 hours.</p>
+                        <a href="#" class="project-btn" onclick="event.preventDefault(); document.getElementById('modal-ecommerce').classList.add('active'); document.body.style.overflow='hidden';">
+                            View Case Study
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-thumbnail">
+                        SaaS Lead Gen System<br>Thumbnail Preview
+                    </div>
+                    <div class="project-content">
+                        <h3>SaaS Lead Gen System</h3>
+                        <p>AI-powered lead qualification with scoring, PQL routing, and automated nurture workflows. Demo conversion +62%, saved 40+ hours/week for sales team. Closed the gap between demos and conversions.</p>
+                        <a href="#" class="project-btn" onclick="event.preventDefault(); document.getElementById('modal-saas').classList.add('active'); document.body.style.overflow='hidden';">
+                            View Case Study
+                        </a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-thumbnail">
+                        Multi-Platform Uploader<br>Thumbnail Preview
+                    </div>
+                    <div class="project-content">
+                        <h3>Multi-Platform Uploader System</h3>
+                        <p>Auto-uploads content across all major platforms with title/description optimization and thumbnail automation. Saved 25 hours/week for clients through intelligent content distribution.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2>What Clients Say</h2>
+                <p>Feedback from teams who trust the systems</p>
+            </div>
+
+            <div class="testimonial-scroller">
+                <div class="testimonial-track" id="testimonialTrack">
+                    <div class="testimonial-card">
+                        <h4 class="testimonial-result">₹2K+ sales in 30 hours</h4>
+                        <p>"Built our Shopify engine. Ruthless efficiency."</p>
+                        <div class="testimonial-meta">E-Commerce Founder</div>
+                        <div class="testimonial-trust">Fashion / Retail</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <h4 class="testimonial-result">2K → 34K followers in 40 days</h4>
+                        <p>"Our creator account exploded. Systems > luck."</p>
+                        <div class="testimonial-meta">Content Creator</div>
+                        <div class="testimonial-trust">Social Media Growth</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <h4 class="testimonial-result">CTR exploded with AI ads</h4>
+                        <p>"Ganesh engineered our AI ads using photorealistic models."</p>
+                        <div class="testimonial-meta">Marketing Director</div>
+                        <div class="testimonial-trust">Performance Marketing</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <h4 class="testimonial-result">25 hours/week saved</h4>
+                        <p>"The multi-platform uploader is automation mastery."</p>
+                        <div class="testimonial-meta">Content Agency Owner</div>
+                        <div class="testimonial-trust">Content Distribution</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <h4 class="testimonial-result">Pipeline improved overnight</h4>
+                        <p>"The SaaS lead-gen engine transformed our sales process."</p>
+                        <div class="testimonial-meta">SaaS Founder</div>
+                        <div class="testimonial-trust">B2B Technology</div>
+                    </div>
+                    <div class="testimonial-card">
+                        <h4 class="testimonial-result">Pure system architecture</h4>
+                        <p>"Zero fluff. Pure execution. That's the difference."</p>
+                        <div class="testimonial-meta">Agency Partner</div>
+                        <div class="testimonial-trust">Marketing Operations</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-dots" id="testimonialDots"></div>
+        </section>
+
+        <section id="agencies">
+            <div class="section-header">
+                <h2>Agencies</h2>
+                <p>Building systems for growth-focused teams</p>
+            </div>
+
+            <div class="agency-block" onclick="toggleAgency(this)">
+                <div class="agency-header">
+                    <div class="agency-left">
+                        <div class="agency-logo-container">⚡</div>
+                        <div class="agency-info">
+                            <h3>Scalify</h3>
+                            <p class="agency-tagline">"Performance over vanity. Systems over spend."</p>
+                        </div>
+                    </div>
+                    <div class="expand-icon">↓</div>
+                </div>
+                
+                <div class="agency-details">
+                    <div class="agency-grid">
+                        <div class="agency-thumbnail">Performance Marketing System</div>
+                        <div class="agency-content">
+                            <h4>Overview</h4>
+                            <ul class="agency-bullets">
+                                <li>Funnel-based Meta Ads optimization for maximum ROAS</li>
+                                <li>Attribution clarity through GA4 and Meta CAPI integration</li>
+                                <li>AI-assisted creative testing and audience segmentation</li>
+                                <li>Lead quality optimization with intelligent scoring systems</li>
+                                <li>ROAS-focused scaling strategies for sustainable growth</li>
+                            </ul>
+                            
+                            <h4>Case Study: Fashion E-Commerce Brand</h4>
+                            <ul class="agency-bullets">
+                                <li>Challenge: ROAS stuck at 1.2x with ₹2L monthly ad spend</li>
+                                <li>Solution: Complete attribution overhaul, AI Commerce Engine, cart recovery automation</li>
+                                <li>Implementation: Meta CAPI + GA4 tracking, predictive inventory, WhatsApp cart recovery, automated upsells</li>
+                                <li>Outcome: ROAS jumped to 3.8x, CPA reduced 48%, ₹2,000+ sales in 30 hours</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="metrics-grid">
+                        <div class="metric-item">
+                            <strong>ROAS Improvement</strong>
+                            <span>1.2x → 3.8x in 3 months</span>
+                        </div>
+                        <div class="metric-item">
+                            <strong>CPA Reduction</strong>
+                            <span>48% cost per acquisition drop</span>
+                        </div>
+                        <div class="metric-item">
+                            <strong>Cart Recovery</strong>
+                            <span>38% increase via WhatsApp automation</span>
+                        </div>
+                        <div class="metric-item">
+                            <strong>Sales Velocity</strong>
+                            <span>₹2,000+ in 30 hours with AI systems</span>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial">
+                        <p class="testimonial-text">"Scalify transformed our ad performance. ROAS tripled, attribution is crystal clear, and we finally understand what drives conversions. The AI Commerce Engine is a game-changer."</p>
+                        <p class="testimonial-author">— Founder, Fashion E-Commerce Brand</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="agency-block" onclick="toggleAgency(this)">
+                <div class="agency-header">
+                    <div class="agency-left">
+                        <div class="agency-logo-container">🎬</div>
+                        <div class="agency-info">
+                            <h3>Void Studios</h3>
+                            <p class="agency-tagline">"Workflows That Accelerate Creativity."</p>
+                        </div>
+                    </div>
+                    <div class="expand-icon">↓</div>
+                </div>
+                
+                <div class="agency-details">
+                    <div class="agency-grid">
+                        <div class="agency-thumbnail">Project Thumbnail</div>
+                        <div class="agency-content">
+                            <h4>Problem</h4>
+                            <ul class="agency-bullets">
+                                <li>Manual rendering pipelines causing bottlenecks</li>
+                                <li>Client delivery workflows eating up creative time</li>
+                                <li>Scaling limited by operational overhead</li>
+                            </ul>
+                            
+                            <h4>Solution</h4>
+                            <ul class="agency-bullets">
+                                <li>Automated rendering and export workflows</li>
+                                <li>Built client delivery systems with automatic notifications</li>
+                                <li>Streamlined project management and file organization</li>
+                            </ul>
+                            
+                            <h4>Results</h4>
+                            <ul class="agency-bullets">
+                                <li>3x improvement in output efficiency</li>
+                                <li>Successfully served 50+ clients with streamlined operations</li>
+                                <li>Team focused on creative work instead of admin tasks</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="metrics-grid">
+                        <div class="metric-item">
+                            <strong>Efficiency Gain</strong>
+                            <span>3x output improvement</span>
+                        </div>
+                        <div class="metric-item">
+                            <strong>Clients Served</strong>
+                            <span>50+ with automated workflows</span>
+                        </div>
+                        <div class="metric-item">
+                            <strong>Time Saved</strong>
+                            <span>40+ hours/week on operations</span>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial">
+                        <p class="testimonial-text">"The automation systems GΛNESH built allowed us to triple our output without hiring more editors. Rendering and delivery are now seamless."</p>
+                        <p class="testimonial-author">— Founder, Void Studios</p>
+                    </div>
+                    
+                    <div class="testimonial">
+                        <p class="testimonial-text">"Client operations went from chaotic to systematic. We can now focus on creative work instead of admin tasks."</p>
+                        <p class="testimonial-author">— Creative Director, Void Studios</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="agency-block" onclick="toggleAgency(this)">
+                <div class="agency-header">
+                    <div class="agency-left">
+                        <div class="agency-logo-container">🚀</div>
+                        <div class="agency-info">
+                            <h3>Sleek Agency</h3>
+                            <p class="agency-tagline">"Revenue Engineered, Not Hoped For."</p>
+                        </div>
+                    </div>
+                    <div class="expand-icon">↓</div>
+                </div>
+                
+                <div class="agency-details">
+                    <div class="agency-grid">
+                        <div class="agency-thumbnail">Project Thumbnail</div>
+                        <div class="agency-content">
+                            <h4>Problem</h4>
+                            <ul class="agency-bullets">
+                                <li>Local brands struggling with poor ROAS and unclear attribution</li>
+                                <li>Ad spend increasing but conversions stagnating</li>
+                                <li>No clear path from ad impression to sale</li>
+                            </ul>
+                            
+                            <h4>Solution</h4>
+                            <ul class="agency-bullets">
+                                <li>Built complete attribution systems with Meta CAPI + GA4 integration</li>
+                                <li>Designed high-converting funnels with lead capture automation</li>
+                                <li>Implemented creative testing frameworks and audience segmentation</li>
+                            </ul>
+                            
+                            <h4>Results</h4>
+                            <ul class="agency-bullets">
+                                <li>ROAS improved from sub-1.5x to 2.8x—3.6x range</li>
+                                <li>Lead costs reduced by 30—45% across campaigns</li>
+                                <li>Managed ₹1,00,000+ cumulative ad spend with clear ROI tracking</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="metrics-grid">
+                        <div class="metric-item">
+                            <strong>Ad Spend Managed</strong>
+                            <span>₹1,00,000+ across multiple campaigns</span>
+                        </div>
+                        <div class="metric-item">
+                            <strong>ROAS Improvement</strong>
+                            <span>From <1.5x to 2.8x—3.6x range</span>
+                        </div>
+                        <div class="metric-item">
+                            <strong>Lead Cost Reduction</strong>
+                            <span>30—45% decrease in CPA</span>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial">
+                        <p class="testimonial-text">"GΛNESH built systems that transformed our attribution model. ROAS improved across all clients, and we finally have clarity on what drives results."</p>
+                        <p class="testimonial-author">— Marketing Director, Sleek Agency</p>
+                    </div>
+                    
+                    <div class="testimonial">
+                        <p class="testimonial-text">"The funnel automation and lead qualification systems saved our team 30+ hours per week. Game-changing work."</p>
+                        <p class="testimonial-author">— Operations Lead, Sleek Agency</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <h2>Before & After Automation</h2>
+                <p>The transformation from manual chaos to intelligent systems</p>
+            </div>
+
+            <div class="slider-container">
+                <div class="slider-side slider-before">
+                    <h3 class="slider-label">Before</h3>
+                    <ul class="slider-list">
+                        <li>ROAS ~1.2x</li>
+                        <li>Manual lead chase</li>
+                        <li>Fragmented funnels</li>
+                        <li>No attribution clarity</li>
+                        <li>High lead wastage</li>
+                    </ul>
+                </div>
+                <div class="slider-side slider-after">
+                    <h3 class="slider-label">After</h3>
+                    <ul class="slider-list">
+                        <li>ROAS 3.8—7.2x</li>
+                        <li>Automated lead flows</li>
+                        <li>Clear attribution logic</li>
+                        <li>Optimized funnels</li>
+                        <li>40+ hours saved/week</li>
+                    </ul>
+                </div>
+                <div class="slider-handle" id="sliderHandle"></div>
+            </div>
+        </section>
+
+        <section id="journey">
+            <div class="section-header">
+                <h2>Journey</h2>
+                <p>Building systems, one year at a time</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-content">
+                        <h4>Void Studios Begins</h4>
+                        <p>Founded video editing agency. Built automation pipelines for rendering and delivery. Served 50+ clients with operational excellence.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">
+                        <h4>Sleek Agency Expansion</h4>
+                        <p>Performance marketing for local brands. Managed ₹1,00,000+ ad spend, built funnels and attribution systems.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-content">
+                        <h4>119+ Automations Built</h4>
+                        <p>Deployed automation systems across sales, support, and operations. AI workflows and business infrastructure at scale.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-content">
+                        <h4>AI Systems Focused</h4>
+                        <p>Deep dive into AI agents and autonomous workflows. Building calling agents, WhatsApp bots, email engines.</p>
+                    </div>
+                </div>
+
+
+                 <div class="timeline-item">
+                    <div class="timeline-year">2026</div>
+                    <div class="timeline-content">
+                        <h4>Looking forward for a Start-up</h4>
+                        <p>Scaling Scalify media, building scalable systems and working upon physical products as a next launch along with a SAAS</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="contact-panel">
+                <h2>Let's Build Systems</h2>
+                <div class="contact-info">
+                    <p><strong>Positioning:</strong> Systems over hype. Automation over repetition. Data over ego.</p>
+                    <p><strong>Availability:</strong> Freelance, Consulting, Select Full-time Roles</p>
+                </div>
+                
+                <div class="contact-methods">
+                    <a href="https://wa.me/919730561180" class="contact-method" target="_blank">
+                        <div class="contact-icon">💬</div>
+                        <div class="contact-text">
+                            <div class="contact-label">WhatsApp</div>
+                            <div class="contact-value">+91 9730561180</div>
+                        </div>
+                    </a>
+                    
+                    <a href="mailto:gsb11032010@gmail.com" class="contact-method">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-text">
+                            <div class="contact-label">Email</div>
+                            <div class="contact-value">gsb11032010@gmail.com</div>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="cta-group">
+                    <a href="mailto:gsb11032010@gmail.com" class="btn btn-primary">Send Design Brief</a>
+                    <a href="https://wa.me/919730561180" class="btn btn-secondary" target="_blank">Schedule Call</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 GΛNESH • AI Automation Engineer • Systems Architect</p>
+        <p style="margin-top: 0.5rem; font-size: 0.85rem;">Systems over hype. Automation over repetition. Data over ego.</p>
+    </footer>
+
+    <script>
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.pageYOffset > 80);
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -80px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        function animateCounter(element) {
+            const target = parseFloat(element.getAttribute('data-target'));
+            const duration = 2500;
+            const start = performance.now();
+            const isDecimal = target % 1 !== 0;
+
+            function update(currentTime) {
+                const elapsed = currentTime - start;
+                const progress = Math.min(elapsed / duration, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 4);
+                const value = easeOut * target;
+                
+                element.textContent = isDecimal ? value.toFixed(1) : Math.floor(value);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            }
+            requestAnimationFrame(update);
+        }
+
+        const statObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target.querySelector('.stat-value');
+                    if (counter && !counter.classList.contains('animated')) {
+                        counter.classList.add('animated');
+                        animateCounter(counter);
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-card').forEach(card => {
+            statObserver.observe(card);
+        });
+
+        const bgSvg = document.getElementById('bgNodes');
+        const nodeCount = 40;
+        const nodes = [];
+
+        for (let i = 0; i < nodeCount; i++) {
+            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            const x = Math.random() * 100;
+            const y = Math.random() * 100;
+            circle.setAttribute('cx', x + '%');
+            circle.setAttribute('cy', y + '%');
+            circle.setAttribute('r', Math.random() * 1.5 + 0.5);
+            circle.setAttribute('fill', 'rgba(56, 189, 248, ' + (Math.random() * 0.3 + 0.2) + ')');
+            bgSvg.appendChild(circle);
+            
+            nodes.push({
+                element: circle,
+                x: x,
+                y: y,
+                vx: (Math.random() - 0.5) * 0.015,
+                vy: (Math.random() - 0.5) * 0.015
+            });
+        }
+
+        function animateNodes() {
+            nodes.forEach(node => {
+                node.x += node.vx;
+                node.y += node.vy;
+                
+                if (node.x < 0 || node.x > 100) node.vx *= -1;
+                if (node.y < 0 || node.y > 100) node.vy *= -1;
+                
+                node.element.setAttribute('cx', node.x + '%');
+                node.element.setAttribute('cy', node.y + '%');
+            });
+            
+            requestAnimationFrame(animateNodes);
+        }
+        animateNodes();
+
+        const flowSvg = document.getElementById('flowCanvas');
+        const svgNS = 'http://www.w3.org/2000/svg';
+
+        const flowNodes = [
+            { x: 100, y: 100, label: 'Ad Traffic' },
+            { x: 480, y: 120, label: 'AI Agent' },
+            { x: 140, y: 280, label: 'CRM' },
+            { x: 520, y: 340, label: 'WhatsApp' },
+            { x: 280, y: 420, label: 'Analytics' },
+            { x: 600, y: 200, label: 'AI Sales Closer' },
+            { x: 50, y: 380, label: 'YouTube Auto' },
+            { x: 380, y: 60, label: 'Commerce Engine' }
+        ];
+
+        const flowEdges = [
+            { from: 0, to: 1 },
+            { from: 1, to: 2 },
+            { from: 2, to: 3 },
+            { from: 3, to: 4 },
+            { from: 1, to: 5 },
+            { from: 0, to: 7 },
+            { from: 4, to: 6 }
+        ];
+
+        flowEdges.forEach(edge => {
+            const from = flowNodes[edge.from];
+            const to = flowNodes[edge.to];
+            
+            const line = document.createElementNS(svgNS, 'line');
+            line.setAttribute('x1', from.x + 85);
+            line.setAttribute('y1', from.y + 25);
+            line.setAttribute('x2', to.x);
+            line.setAttribute('y2', to.y + 25);
+            line.setAttribute('stroke', 'rgba(56, 189, 248, 0.3)');
+            line.setAttribute('stroke-width', '2');
+            line.setAttribute('stroke-dasharray', '10,8');
+            
+            const animate = document.createElementNS(svgNS, 'animate');
+            animate.setAttribute('attributeName', 'stroke-dashoffset');
+            animate.setAttribute('from', '0');
+            animate.setAttribute('to', '180');
+            animate.setAttribute('dur', '5s');
+            animate.setAttribute('repeatCount', 'indefinite');
+            line.appendChild(animate);
+            
+            flowSvg.appendChild(line);
+        });
+
+        flowNodes.forEach(node => {
+            const g = document.createElementNS(svgNS, 'g');
+            g.classList.add('flow-node');
+            
+            const rect = document.createElementNS(svgNS, 'rect');
+            rect.setAttribute('x', node.x);
+            rect.setAttribute('y', node.y);
+            rect.setAttribute('width', '170');
+            rect.setAttribute('height', '50');
+            rect.setAttribute('rx', '12');
+            rect.setAttribute('fill', 'rgba(255, 255, 255, 0.04)');
+            rect.setAttribute('stroke', 'rgba(56, 189, 248, 0.3)');
+            rect.setAttribute('stroke-width', '1.5');
+            
+            const text = document.createElementNS(svgNS, 'text');
+            text.setAttribute('x', node.x + 85);
+            text.setAttribute('y', node.y + 32);
+            text.setAttribute('text-anchor', 'middle');
+            text.setAttribute('fill', '#8b92a8');
+            text.setAttribute('font-size', '14');
+            text.setAttribute('font-weight', '700');
+            text.textContent = node.label;
+            
+            g.appendChild(rect);
+            g.appendChild(text);
+            flowSvg.appendChild(g);
+        });
+
+        document.querySelectorAll('.case-study-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const caseId = card.getAttribute('data-case');
+                document.getElementById(`modal-${caseId}`).classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function closeModal(caseId) {
+            document.getElementById(`modal-${caseId}`).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        function toggleAgency(element) {
+            element.classList.toggle('expanded');
+        }
+
+        const sliderHandle = document.getElementById('sliderHandle');
+        const sliderBefore = document.querySelector('.slider-before');
+        let isDragging = false;
+
+        function updateSlider(clientX) {
+            const container = document.querySelector('.slider-container');
+            const rect = container.getBoundingClientRect();
+            let position = ((clientX - rect.left) / rect.width) * 100;
+            position = Math.max(0, Math.min(100, position));
+            
+            sliderHandle.style.left = position + '%';
+            sliderBefore.style.clipPath = `inset(0 ${100 - position}% 0 0)`;
+        }
+
+        sliderHandle.addEventListener('mousedown', () => {
+            isDragging = true;
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                updateSlider(e.clientX);
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        sliderHandle.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            e.preventDefault();
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (isDragging) {
+                updateSlider(e.touches[0].clientX);
+            }
+        });
+
+        document.addEventListener('touchend', () => {
+            isDragging = false;
+        });
+
+        document.querySelector('.slider-container').addEventListener('click', (e) => {
+            if (!isDragging) {
+                updateSlider(e.clientX);
+            }
+        });
+
+        // Testimonial Scroller
+        const testimonialTrack = document.getElementById('testimonialTrack');
+        const testimonialDots = document.getElementById('testimonialDots');
+        const testimonialCards = document.querySelectorAll('.testimonial-card');
+        let currentTestimonial = 0;
+
+        testimonialCards.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = 'testimonial-dot';
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                currentTestimonial = index;
+                updateTestimonials();
+            });
+            testimonialDots.appendChild(dot);
+        });
+
+        function updateTestimonials() {
+            const offset = currentTestimonial * -400;
+            testimonialTrack.style.transform = `translateY(${offset}px)`;
+            
+            document.querySelectorAll('.testimonial-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentTestimonial);
+            });
+        }
+
+        setInterval(() => {
+            currentTestimonial = (currentTestimonial + 1) % testimonialCards.length;
+            updateTestimonials();
+        }, 5000);
+    </script>
+
+<!-- ================= MILK GLASS + 3D OVERRIDES ================= -->
+<style>
+:root{
+  --glass-bg: rgba(255,255,255,0.10);
+  --glass-border: rgba(255,255,255,0.28);
+  --glass-highlight: rgba(255,255,255,0.45);
+}
+
+/* UNIVERSAL MILK GLASS STACK */
+.glass-card,
+.project-card,
+.testimonial-card,
+.timeline-content,
+.contact-panel,
+.skill-pill,
+.tech-tag,
+.modal-content,
+.project-engine,
+.project-thumbnail {
+  position: relative;
+  backdrop-filter: blur(28px) saturate(180%);
+  background:
+    linear-gradient(180deg,
+      rgba(255,255,255,0.18),
+      rgba(255,255,255,0.06)
+    );
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.5),
+    0 40px 120px rgba(0,0,0,0.6);
+  transform-style: preserve-3d;
+  transition: transform .6s cubic-bezier(.22,.61,.36,1),
+              box-shadow .6s ease,
+              background .6s ease;
+}
+
+/* REFRACTION LAYER */
+.glass-card::after,
+.project-card::after,
+.testimonial-card::after,
+.contact-panel::after{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:
+    radial-gradient(circle at var(--mx,50%) var(--my,50%),
+      rgba(255,255,255,0.35),
+      transparent 60%);
+  opacity:.25;
+  pointer-events:none;
+  transform: translateZ(30px);
+}
+
+/* HOVER DEPTH */
+.glass-card:hover,
+.project-card:hover,
+.testimonial-card:hover,
+.timeline-content:hover,
+.contact-panel:hover{
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.7),
+    0 80px 180px rgba(56,189,248,0.35);
+}
+
+/* MAKE EVERYTHING FEEL FLOATING */
+section{
+  perspective:1200px;
+}
+</style>
+
+<script>
+/* ================= 3D INTERACTION ENGINE ================= */
+const depthElements = document.querySelectorAll(
+  '.glass-card,.project-card,.testimonial-card,.timeline-content,.contact-panel'
+);
+
+document.addEventListener('mousemove', e => {
+  const x = (e.clientX / window.innerWidth - 0.5) * 2;
+  const y = (e.clientY / window.innerHeight - 0.5) * 2;
+
+  depthElements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    const mx = ((e.clientX - rect.left) / rect.width) * 100;
+    const my = ((e.clientY - rect.top) / rect.height) * 100;
+
+    el.style.setProperty('--mx', mx + '%');
+    el.style.setProperty('--my', my + '%');
+
+    el.style.transform =
+      `rotateX(${ -y * 6 }deg)
+       rotateY(${ x * 6 }deg)
+       translateZ(20px)`;
+  });
+});
+
+document.addEventListener('mouseleave', () => {
+  depthElements.forEach(el => {
+    el.style.transform = 'rotateX(0) rotateY(0) translateZ(0)';
+  });
+});
+</script>
+
+</body>
+</html>
