@@ -334,78 +334,79 @@
             border-color: var(--cyan);
         }
         
-        .stats-row {
-            display: flex;
-            gap: clamp(1.5rem, 3vw, 3rem);
-            justify-content: center;
-            flex-wrap: wrap;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease forwards 1s;
-        }
-        
-        .stat-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(22px) saturate(180%);
-            padding: clamp(1.8rem, 3vw, 2.5rem) clamp(2.5rem, 4vw, 4rem);
-            border-radius: 16px;
-            border: 1px solid var(--glass-border);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            min-width: 180px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--cyan), transparent);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        
-        .stat-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 50% 0%, var(--cyan-glow), transparent 70%);
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        
-        .stat-card:hover {
-            transform: translateY(-10px) rotateX(5deg);
-            border-color: var(--cyan);
-            box-shadow: 0 20px 60px var(--cyan-glow);
-        }
-        
-        .stat-card:hover::before,
-        .stat-card:hover::after {
-            opacity: 1;
-        }
-        
-        .stat-value {
-            display: block;
-            font-size: clamp(2.8rem, 5vw, 4rem);
-            font-weight: 900;
-            margin-bottom: 0.5rem;
-            color: var(--white);
-            position: relative;
-            z-index: 1;
-        }
-        
-        .stat-label {
-            color: var(--gray-3);
-            font-size: clamp(0.75rem, 1.5vw, 0.9rem);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 600;
-            position: relative;
-            z-index: 1;
-        }
+      .stats-row {
+    display: flex;
+    gap: clamp(1rem, 2.5vw, 2rem); /* tighter spacing */
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeInUp 0.8s ease forwards 1s;
+}
+
+.stat-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px) saturate(170%);
+    padding: clamp(1.2rem, 2.5vw, 1.8rem) clamp(1.6rem, 3vw, 2.4rem); /* reduced */
+    border-radius: 14px;
+    border: 1px solid var(--glass-border);
+    transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 150px; /* smaller base */
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity: 0;
+    transition: opacity 0.45s ease;
+}
+
+.stat-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, var(--cyan-glow), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.45s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-8px) rotateX(4deg); /* slightly calmer */
+    border-color: var(--cyan);
+    box-shadow: 0 18px 48px var(--cyan-glow);
+}
+
+.stat-card:hover::before,
+.stat-card:hover::after {
+    opacity: 1;
+}
+
+.stat-value {
+    display: block;
+    font-size: clamp(2.1rem, 4.5vw, 3rem); /* reduced */
+    font-weight: 900;
+    margin-bottom: 0.4rem;
+    color: var(--white);
+    position: relative;
+    z-index: 1;
+}
+
+.stat-label {
+    color: var(--gray-3);
+    font-size: clamp(0.7rem, 1.4vw, 0.85rem); /* reduced */
+    text-transform: uppercase;
+    letter-spacing: 1.6px;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+}
+
         
         /* SECTIONS */
         section {
@@ -1905,9 +1906,8 @@
     <main>
         <section class="hero">
             <div class="hero-content">
-                <div class="eyebrow">GΛNESH — AI AUTOMATION ENGINEER</div>
+                <div class="eyebrow">GΛNESH — AI AUTOMATION & MARKETING</div>
                 <h1>I Build Intelligent Systems That Drive Growth and Eliminate Repetition.</h1>
-                <p class="hero-subtext">GΛNESH Bagali • AI Automation & Systems Architect specializing in intelligent workflows, performance marketing systems, and scalable automation infrastructure</p>
                 <p class="hero-subtext">119+ automations deployed • ₹100,000+ spend managed • systems that scale</p>
                 
                 <div class="cta-group">
@@ -1928,95 +1928,6 @@
                         <span class="stat-value" data-target="35">0</span>
                         <span class="stat-label">Hours Saved/Week!</span>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="about">
-            <div class="about-card">
-                <p><strong>Systems thinker.</strong> AI automation and performance marketing specialist. I build intelligent workflows that eliminate repetition and drive measurable growth.</p>
-                <p><strong>Execution over theory.</strong> 119+ automations deployed. Real systems, real results. No fluff.</p>
-            </div>
-        </section>
-
-        <section id="agents">
-            <div class="section-header">
-                <h2>AI Agent Capabilities</h2>
-                <p>Intelligent automation that works while you sleep</p>
-            </div>
-
-            <div class="cards-grid">
-                <div class="glass-card">
-                    <h3>AI Calling Agent</h3>
-                    <p>Handles inbound & outbound calls with natural conversation flow.</p>
-                    <ul>
-                        <li>Lead qualification</li>
-                        <li>Meeting booking</li>
-                        <li>Automated follow-ups</li>
-                        <li>24/7 operation</li>
-                    </ul>
-                </div>
-
-                <div class="glass-card">
-                    <h3>WhatsApp Support Automation</h3>
-                    <p>Instant customer support through contextual messaging.</p>
-                    <ul>
-                        <li>Order tracking</li>
-                        <li>Shipping status</li>
-                        <li>Contextual replies</li>
-                        <li>Smart escalation</li>
-                    </ul>
-                </div>
-
-                <div class="glass-card">
-                    <h3>AI Email Engine</h3>
-                    <p>Automated email sequences with intelligent targeting.</p>
-                    <ul>
-                        <li>Cold outreach logic</li>
-                        <li>Follow-up sequences</li>
-                        <li>Lead nurturing</li>
-                        <li>CRM sync</li>
-                    </ul>
-                </div>
-
-              
-                <div class="glass-card">
-                    <h3>AI YouTube Automation</h3>
-                    <p>End-to-end content creation and optimization engine.</p>
-                    <ul>
-                        <li>Script writing</li>
-                        <li>Thumbnail design</li>
-                        <li>Auto-editing</li>
-                        <li>Scheduled uploads</li>
-                        <li>Performance tracking</li>
-                        <li>Retention optimization</li>
-                    </ul>
-                </div>
-
-                <div class="glass-card">
-                    <h3>AI Sales Closer</h3>
-                    <p>Intelligent lead handling and conversion system.</p>
-                    <ul>
-                        <li>Handles objections</li>
-                        <li>Qualifies leads</li>
-                        <li>Books calls</li>
-                        <li>Follows up</li>
-                        <li>Reports conversions</li>
-                    </ul>
-                </div>
-
-                <div class="glass-card">
-                    <h3>AI Commerce Engine</h3>
-                    <p>Complete e-commerce growth machine powered by AI.</p>
-                    <ul>
-                        <li>Predicts inventory</li>
-                        <li>Writes product descriptions</li>
-                        <li>Auto-creates upsells</li>
-                        <li>Fixes pricing</li>
-                        <li>Recovers carts via WhatsApp</li>
-                        <li>Sends retention emails</li>
-                        <li>Optimizes product rankings</li>
-                    </ul>
                 </div>
             </div>
         </section>
@@ -2129,54 +2040,6 @@
                 <div class="skill-pill">Automation Strategy</div>
                 <div class="skill-pill">Data-Driven Decisioning</div>
                 <div class="skill-pill">Systems Thinking</div>
-            </div>
-        </section>
-
-        <section id="cases">
-            <div class="section-header">
-                <h2>Case Studies</h2>
-                <p>Real systems, real results</p>
-            </div>
-
-            <div class="cards-grid">
-                <div class="glass-card case-study-card" data-case="ecommerce">
-                    <h3>E-Commerce Growth System</h3>
-                    <p>Fashion / Retail brand scaled with intelligent automation and attribution.</p>
-                    <div class="tech-stack">
-                        <span class="tech-tag">Meta Ads</span>
-                        <span class="tech-tag">GA4</span>
-                        <span class="tech-tag">Python</span>
-                    </div>
-                </div>
-
-                <div class="glass-card case-study-card" data-case="saas">
-                    <h3>SaaS Lead Qualification System</h3>
-                    <p>B2B SaaS platform automated lead scoring and routing.</p>
-                    <div class="tech-stack">
-                        <span class="tech-tag">OpenAI</span>
-                        <span class="tech-tag">n8n</span>
-                        <span class="tech-tag">HubSpot</span>
-                    </div>
-                </div>
-
-                <div class="glass-card case-study-card" data-case="void">
-                    <h3>Void Studios Automation</h3>
-                    <p>Video editing agency workflow and delivery automation.</p>
-                    <div class="tech-stack">
-                        <span class="tech-tag">Automation</span>
-                        <span class="tech-tag">Operations</span>
-                    </div>
-                </div>
-
-                <div class="glass-card case-study-card" data-case="sleek">
-                    <h3>Sleek Agency Performance Wing</h3>
-                    <p>Performance marketing systems for local brands.</p>
-                    <div class="tech-stack">
-                        <span class="tech-tag">Meta Ads</span>
-                        <span class="tech-tag">Funnels</span>
-                        <span class="tech-tag">Attribution</span>
-                    </div>
-                </div>
             </div>
         </section>
 
@@ -2597,86 +2460,6 @@
             </div>
         </section>
 
-        <section>
-            <div class="section-header">
-                <h2>Before & After Automation</h2>
-                <p>The transformation from manual chaos to intelligent systems</p>
-            </div>
-
-            <div class="slider-container">
-                <div class="slider-side slider-before">
-                    <h3 class="slider-label">Before</h3>
-                    <ul class="slider-list">
-                        <li>ROAS ~1.2x</li>
-                        <li>Manual lead chase</li>
-                        <li>Fragmented funnels</li>
-                        <li>No attribution clarity</li>
-                        <li>High lead wastage</li>
-                    </ul>
-                </div>
-                <div class="slider-side slider-after">
-                    <h3 class="slider-label">After</h3>
-                    <ul class="slider-list">
-                        <li>ROAS 3.8—7.2x</li>
-                        <li>Automated lead flows</li>
-                        <li>Clear attribution logic</li>
-                        <li>Optimized funnels</li>
-                        <li>40+ hours saved/week</li>
-                    </ul>
-                </div>
-                <div class="slider-handle" id="sliderHandle"></div>
-            </div>
-        </section>
-
-        <section id="journey">
-            <div class="section-header">
-                <h2>Journey</h2>
-                <p>Building systems, one year at a time</p>
-            </div>
-
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-year">2022</div>
-                    <div class="timeline-content">
-                        <h4>Void Studios Begins</h4>
-                        <p>Founded video editing agency. Built automation pipelines for rendering and delivery. Served 50+ clients with operational excellence.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-year">2023</div>
-                    <div class="timeline-content">
-                        <h4>Sleek Agency Expansion</h4>
-                        <p>Performance marketing for local brands. Managed ₹1,00,000+ ad spend, built funnels and attribution systems.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-year">2024</div>
-                    <div class="timeline-content">
-                        <h4>119+ Automations Built</h4>
-                        <p>Deployed automation systems across sales, support, and operations. AI workflows and business infrastructure at scale.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-year">2025</div>
-                    <div class="timeline-content">
-                        <h4>AI Systems Focused</h4>
-                        <p>Deep dive into AI agents and autonomous workflows. Building calling agents, WhatsApp bots, email engines.</p>
-                    </div>
-                </div>
-
-
-                 <div class="timeline-item">
-                    <div class="timeline-year">2026</div>
-                    <div class="timeline-content">
-                        <h4>Looking forward for a Start-up</h4>
-                        <p>Scaling Scalify media, building scalable systems and working upon physical products as a next launch along with a SAAS</p>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <section id="contact">
             <div class="contact-panel">
